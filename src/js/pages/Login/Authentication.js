@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Loading from '../../components/Loading';
 import { getUserHash, createAdminUser, identiconLogin } from '../../actions';
 import adminAudio from '../../../assets/adminAudio.webm';
+import axios from 'axios';
 
 export class Authentication extends React.Component {
 
@@ -22,15 +23,29 @@ export class Authentication extends React.Component {
       $this.props.identiconLogin("persistant_admin_user_hash", (success) => {
         if(!success) {
           // If not logged in, create admin user and log in
-          fetch(adminAudio)
-          .then(res => res.blob())
-          .then(blob => {
-            const reader = new FileReader();
-            reader.onload = () => {
-              $this.props.createAdminUser(reader.result, "persistant_admin_user_hash");
-            };
-            reader.readAsDataURL(blob);
-          });
+          axios.get(adminAudio, {responseType: 'arraybuffer'})
+            .then(res => {
+              const blob = new Blob([res.data], {
+                type: 'audio/webm',
+              });
+              const reader = new FileReader();
+              reader.onload = () => {
+                $this.props.createAdminUser(reader.result, "persistant_admin_user_hash");
+              };
+              reader.readAsDataURL(blob);
+            });
+          
+          
+          
+          // fetch(adminAudio)
+          // .then(res => res.blob())
+          // .then(blob => {
+          //   const reader = new FileReader();
+          //   reader.onload = () => {
+          //     $this.props.createAdminUser(reader.result, "persistant_admin_user_hash");
+          //   };
+          //   reader.readAsDataURL(blob);
+          // });
         }
       });
     }
