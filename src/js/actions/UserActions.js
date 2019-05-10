@@ -24,7 +24,7 @@ export const fetchUserSuccess = (users) => {
 };
 
 
-export const getUserHash = () => {
+export const getUserHash = (redirect) => {
 
     return dispatch => {
       return axios
@@ -36,6 +36,8 @@ export const getUserHash = () => {
             dispatch(getUserHashSuccess(icon_hash));
         })
         .catch(error => {
+            localStorage.removeItem('token');
+            redirect.push('./ErrorPage');
             console.log(error);
         });
     };

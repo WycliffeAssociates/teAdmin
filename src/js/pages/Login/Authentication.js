@@ -14,8 +14,9 @@ export class Authentication extends React.Component {
   }
 
   componentWillMount() {
+    const { history } = this.props.history;
     if(localStorage.getItem('token') != null) {
-      this.props.getUserHash(); // Login by token in the localStorage
+      this.props.getUserHash(history); // Login by token in the localStorage
     } else {
       var $this = this;
       

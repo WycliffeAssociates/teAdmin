@@ -10,6 +10,9 @@ const mockProps = {
   },
   users: [{is_social: false, id: 1}, {is_social: true, id: 2}],
   identiconLogin: jest.fn(),
+  history: {
+    push: jest.fn()
+  }
 };
 describe('Authentication test suite', () => {
   const wrapper = shallow(<Authentication {...mockProps} />);
