@@ -14,7 +14,7 @@ export class Authentication extends React.Component {
   }
 
   componentWillMount() {
-    const { history } = this.props.history;
+    const { history } = this.props;
     if(localStorage.getItem('token') != null) {
       this.props.getUserHash(history); // Login by token in the localStorage
     } else {
@@ -35,18 +35,8 @@ export class Authentication extends React.Component {
               };
               reader.readAsDataURL(blob);
             });
-          
-          
-          
-          // fetch(adminAudio)
-          // .then(res => res.blob())
-          // .then(blob => {
-          //   const reader = new FileReader();
-          //   reader.onload = () => {
-          //     $this.props.createAdminUser(reader.result, "persistant_admin_user_hash");
-          //   };
-          //   reader.readAsDataURL(blob);
-          // });
+        } else {
+          history.push("/dashboard");
         }
       });
     }
@@ -68,6 +58,12 @@ export class Authentication extends React.Component {
     }
   }
 
+  onSettingsClick() {
+    this.props.history.push ({
+      pathname: '/settings',
+    });
+  }
+
   render() {
     return (
 
@@ -77,9 +73,17 @@ export class Authentication extends React.Component {
 
         {
           this.props.loading?
-          <Loading txt={this.props.txt} height= {'auto'} marginTop='10vh'
+          <Loading txt={this.props.txt} height= {'auto'} top='20vh'
           message={'Authentication'}/>
-          : ""
+          : 
+          <div>
+            <Retry onClick={() => {window.location.reload(false)}}>
+              Retry <i className="material-icons">refresh</i>
+              </Retry>
+            <SettingsButton onClick={this.onSettingsClick.bind(this)}>
+              {this.props.txt.settings} <i className="material-icons">settings</i>
+            </SettingsButton>
+          </div>
         }
         
 
@@ -97,6 +101,23 @@ const  AuthPage = styled.div`
   text-align: center;
   `;
 AuthPage.displayName='AuthPage';
+
+const Retry = styled.div`
+  margin-top: 10vh;
+  font-size: 22px;
+  font-weight: bold;
+  color: #064fc4;
+  cursor: pointer;
+`;
+Retry.displayName = 'Retry';
+
+const SettingsButton = styled.div`
+  font-size: 20px;
+  margin-top: 5vh;
+  cursor: pointer;
+  color: #064fc4;
+`;
+SettingsButton.displayName = 'SettingsButton';
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({getUserHash, createAdminUser, identiconLogin}, dispatch);

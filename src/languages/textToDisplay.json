@@ -48,7 +48,11 @@
     "mode": "Mode",
     "anthology": "Anthology",
     "sourceLanguage": "Src. Language",
-    "projectDetails": "Project Details"
+    "projectDetails": "Project Details",
+    "settings": "Settings",
+    "serverName": "Server Name",
+    "save": "Save",
+    "restoreDefaults": "Restore defaults"
    },
    "Spanish": {
       "continue": "Continuar",
@@ -99,6 +103,10 @@
       "mode": "Modo",
       "anthology": "Antología",
       "sourceLanguage": "Lenguaje fuente",
-      "projectDetails": "Project Details"
+      "projectDetails": "Project Details",
+      "settings": "Ajustes",
+      "serverName": "Nombre del servidor",
+      "save": "Salvar",
+      "restoreDefaults": "Restaurar los valores predeterminados"
    }
 }

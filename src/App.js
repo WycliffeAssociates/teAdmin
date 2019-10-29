@@ -7,13 +7,19 @@ import axios from 'axios';
 import Authentication from './js/pages/Login/Authentication.js';
 import ErrorPage from './js/pages/ErrorPage/ErrorPage.js';
 import Dashboard from './js/pages/main/Dashboard.js';
+import SettingsPage from './js/pages/settings/SettingsPage';
 import config from './config/config';
 import { DragDropContext } from 'react-dnd';
 import { default as TouchBackend } from 'react-dnd-touch-backend';
 
 // import and configure the raven client for sentry in order to track errors
 import Raven from 'raven-js';
-Raven.config(`http://9183fe1745da4049889061d44d154a4b@${config.domain}:9000/3`).install();
+
+try {
+  Raven.config(`http://9183fe1745da4049889061d44d154a4b@${config.domain}:9000/3`).install();
+} catch(error) {
+  console.log("Raven is not configured");
+}
 
 
 class App extends Component {
@@ -46,6 +52,7 @@ class App extends Component {
         <Switch>
           <Route exact path = "/" component={Authentication} />
           <Route path = "/dashboard" component={Dashboard} />
+          <Route path = "/settings" component={SettingsPage} />
           <Route path = "/errorPage" component={ErrorPage} />
           <Route path = "*" component={NotFound} />
         </Switch>

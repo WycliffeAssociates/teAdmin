@@ -79,6 +79,12 @@ export class Dashboard extends Component {
     
   }
 
+  onSettingsClick() {
+    this.props.history.push ({
+      pathname: '/settings',
+    });
+  }
+
   render() {
 
     const { txt } = this.props;
@@ -127,6 +133,9 @@ export class Dashboard extends Component {
         </Tabs>
 
         <LanguageContainer>
+          <SettingsButton onClick={this.onSettingsClick.bind(this)}>
+            {this.props.txt.settings} <i className="material-icons">settings</i>
+          </SettingsButton>
           <Dropdown
             trigger={['click']}
             overlay={menu}
@@ -152,11 +161,18 @@ const Language = styled.p`
 Language.displayName = 'Language';
 
 const LanguageContainer = styled.div`
+  display: flex;
   position: absolute;
   top: 15px;
   right: 20px;
 `;
 LanguageContainer.displayName = 'LanguageContainer';
+
+const SettingsButton = styled.div`
+  margin-right: 1vh;
+  cursor: pointer;
+`;
+SettingsButton.displayName = 'SettingsButton';
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({getUserHash, removeUser,

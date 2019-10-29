@@ -49,7 +49,7 @@ export class ProjectContainer extends Component {
     return (
       <Container>
           { this.props.loading?
-            <Loading txt={txt} height={'auto'} top={'10vh'} />
+            <Loading txt={txt} height={'auto'} top='10vh' />
             : 
             <CardsContainer>
             {

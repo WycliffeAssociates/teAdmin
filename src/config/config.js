@@ -4,11 +4,13 @@
     Then you can access the settings as "config.apiUrl", "config.streamingUrl", etc
 */
 
+const uploadServer = localStorage.getItem("uploadServer") || "opentranslationtools.org";
+
 const config = {
-  apiUrl: 'http://opentranslationtools.org/api/',
-  streamingUrl: 'http://opentranslationtools.org/',
-  redirectUri: 'http://opentranslationtools.org/',
-  domain: 'opentranslationtools.org'
+  apiUrl: 'http://' + uploadServer + '/api/',
+  streamingUrl: 'http://' + uploadServer + '/',
+  redirectUri: 'http://' + uploadServer + '/',
+  domain: '' + uploadServer + ''
 };
 
 export default config;

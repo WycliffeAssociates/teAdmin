@@ -37,7 +37,7 @@ export const getUserHash = (redirect) => {
         })
         .catch(error => {
             localStorage.removeItem('token');
-            redirect.push('./ErrorPage');
+            redirect.go(0);
             console.log(error);
         });
     };
@@ -69,7 +69,7 @@ export const createAdminUser = (recordedBlob, hash) => {
       })
       .catch( exception => {
         console.log(exception);
-        if(exception.response.data != undefined 
+        if(exception.response != undefined && exception.response.data != undefined 
           && exception.response.data.error == 'user_exists') {
             dispatch(identiconLogin(hash, () => {}));
         } else {

@@ -52,7 +52,7 @@ export class UserPage extends React.Component {
       <Container>
 
         { this.props.loading?
-            <Loading txt={this.props.txt} height={'auto'} top={'10vh'} />
+            <Loading txt={this.props.txt} height={'auto'} top='10vh' />
             : 
             <Grid columns={16}>
               {

@@ -12,13 +12,9 @@ export const fetchAllProjects = (query, redirect) => {
         dispatch(dispatchAllProjectsReceived(response.data, query ));
       })
       .catch(err => {
+        localStorage.removeItem('token');
+        redirect.push('/');
         dispatch(dispatchAllProjectsFailed(err));
-        if(err.response != undefined && err.response.status == 401) {
-          localStorage.removeItem('token');
-          redirect.push('/');
-        } else {
-          redirect.push('/errorPage');
-        }
       });
   };
 };
