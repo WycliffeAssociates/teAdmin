@@ -1,8 +1,8 @@
 {
-  "name": "tEAdmin",
+  "name": "BTTExchangerAdmin",
   "author": "mxaln",
   "version": "0.1.2",
-  "description": "Translation Exchange Admin",
+  "description": "BTT Exchanger Admin",
   "private": true,
   "homepage": ".",
   "main": "src/start.js",

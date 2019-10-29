@@ -69,7 +69,7 @@ export class Authentication extends React.Component {
 
       <AuthPage>
 
-        <h2 style={{marginTop: '10vh'}}> Translation Exchange Admin </h2>
+        <h2 style={{marginTop: '10vh'}}> BTT Exchanger Admin </h2>
 
         {
           this.props.loading?
