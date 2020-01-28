@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
+import { importLocalization } from '../../actions';
+import {bindActionCreators} from 'redux';
+import Localization from '../../../languages/textToDisplay.json';
 
 export class SettingsPage extends React.Component {
 
@@ -11,6 +14,8 @@ export class SettingsPage extends React.Component {
     };
 
     this.onServerNameChange = this.onServerNameChange.bind(this);
+    this.onLocalizationChange = this.onLocalizationChange.bind(this);
+    this.onLocalizationDownload = this.onLocalizationDownload.bind(this);
   }
 
   componentWillMount() {
@@ -19,6 +24,27 @@ export class SettingsPage extends React.Component {
 
   onServerNameChange(value) {
     this.setState({ serverName: value });
+  }
+
+  onLocalizationChange() {
+    const {importLocalization} = this.props;
+    importLocalization(this.inputElement.files[0], (success) => {
+      if(success) {
+        alert(this.props.txt.get("upload_success"));
+      } else {
+        alert(this.props.txt.get("upload_failed"));
+      }
+    });
+    this.inputElement.value = "";
+  }
+
+  onLocalizationDownload() {
+    var data = new Blob([JSON.stringify(Localization)], {type: 'text/json'});
+    var jsonURL = window.URL.createObjectURL(data);
+    var tempLink = document.createElement('a');
+    tempLink.href = jsonURL;
+    tempLink.setAttribute('download', 'localization.json');
+    tempLink.click();
   }
 
   onSaveClick() {
@@ -30,6 +56,10 @@ export class SettingsPage extends React.Component {
     this.setState({ serverName: "opentranslationtools.org" });
   }
 
+  handleInputClick = (e) => {
+    this.inputElement.click();
+  }
+
   render() {
     const {txt} = this.props;
 
@@ -37,27 +67,41 @@ export class SettingsPage extends React.Component {
       <Container>
 
         <BackLink onClick={()=> this.props.history.goBack()}>
-          <i className="material-icons">arrow_backward </i> {txt.goBack}
+          <i className="material-icons">arrow_backward </i> {txt.get("goBack")}
         </BackLink>
 
         <Header>
-          {txt.settings}
+          {txt.get("settings")}
         </Header>
 
         <SettingsContainer>
+          
           <SettingsItem>
-            <SettingsTitle>{txt.serverName}</SettingsTitle>
+            <SettingsTitle>{txt.get("serverName")}</SettingsTitle>
             <SettingsValue>
               <SettingsInput type="text" id="serverName" 
                 value={this.state.serverName}
                 onChange={(e) => {this.onServerNameChange(e.target.value)}} />
             </SettingsValue>
           </SettingsItem>
+          
+          <SettingsItem>
+            <SettingsTitle>{txt.get("localizationFile")}</SettingsTitle>
+            <SettingsValue>
+              <SettingsFileInput onClick={this.handleInputClick}>{txt.get("upload")}</SettingsFileInput>
+              <SettingsInput type="file" id="localization" accept=".json"
+                onChange={(e) => {this.onLocalizationChange()}} 
+                innerRef={input => this.inputElement = input}
+                style={{display: 'none'}} />
+                <DownloadLink onClick={this.onLocalizationDownload}>{txt.get("download")}</DownloadLink>
+            </SettingsValue>
+          </SettingsItem>
+        
         </SettingsContainer>
 
         <ButtonsContainer>
-          <SaveButton onClick={this.onSaveClick.bind(this)}>{txt.save}</SaveButton>
-          <RestoreDefaultsButton onClick={this.onRestoreClick.bind(this)}>{txt.restoreDefaults}</RestoreDefaultsButton>
+          <SaveButton onClick={this.onSaveClick.bind(this)}>{txt.get("save")}</SaveButton>
+          <RestoreDefaultsButton onClick={this.onRestoreClick.bind(this)}>{txt.get("restoreDefaults")}</RestoreDefaultsButton>
         </ButtonsContainer>
 
       </Container>
@@ -112,6 +156,7 @@ SettingsContainer.displayName = 'SettingsContainer';
 
 const SettingsItem = styled.div`
   display: flex;
+  margin-top: 20px;
 `;
 SettingsItem.displayName = 'SettingsItem';
 
@@ -133,6 +178,28 @@ const SettingsInput = styled.input`
   padding: 0 5px;
 `;
 SettingsInput.displayName = 'SettingsInput';
+
+const SettingsFileInput = styled.div`
+  width: 300px;
+  height: 30px;
+  border-radius: 5px;
+  padding: 0 5px;
+  border: 1px solid #07c;
+  text-align: center;
+  background-image: linear-gradient(#83b2ff, #0095ff);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #66bfff;
+  color: white;
+  font-weight: bold;
+  padding-top: 3px;
+`;
+SettingsFileInput.displayName = 'SettingsFileInput';
+
+const DownloadLink = styled.a`
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+`;
 
 const ButtonsContainer = styled.div`
   width: 100%;
@@ -156,9 +223,13 @@ const RestoreDefaultsButton = styled.a`
 `;
 RestoreDefaultsButton.displayName = 'RestoreDefaultsButton';
 
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({importLocalization}, dispatch);
+};
+
 const mapStateToProps = state => {
   const {txt} = state.geolocation;
   return {txt};
 };
 
-export default connect (mapStateToProps )(SettingsPage);
+export default connect (mapStateToProps, mapDispatchToProps )(SettingsPage);

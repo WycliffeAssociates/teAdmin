@@ -1,2 +1,2 @@
 # teAdmin
-Admin app for translationExchange
+Admin app for BTT Exchanger

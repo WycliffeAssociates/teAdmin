@@ -18,12 +18,12 @@ export class ProjectContainer extends Component {
 
   onDeleteProject(id) {
     const {txt} = this.props;
-    this.handleConfirmDialogShown(true, txt.deleteConfirm, (isYes) => {
+    this.handleConfirmDialogShown(true, txt.get("deleteConfirm"), (isYes) => {
       if(isYes) {
         this.props.deleteProject(id, this.props.history, (success, error) => {
           this.handleConfirmDialogShown(false, "", null);
           if(!success) {
-            this.handleMessagDialogShown(true, this.props.txt.error);
+            this.handleMessagDialogShown(true, this.props.txt.get("error"));
           }
         });
       }

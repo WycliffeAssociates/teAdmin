@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { getUserHash, removeUser, updateLanguage} from '../../actions';
+import { getUserHash, removeUser, updateLanguage, fetchLocalization} from '../../actions';
 import * as pages from '../../pageConstants';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "../../../css/react-tabs.css";
@@ -35,11 +35,8 @@ export class Dashboard extends Component {
   }
 
   componentWillMount() {
-    const {updateLanguage} = this.props;
-    const language = localStorage.getItem('language');
-    if (language) {
-      updateLanguage(language);
-    }
+    const {fetchLocalization} = this.props;
+    fetchLocalization();
   }
 
   onConfirmed(isYes) {
@@ -87,16 +84,21 @@ export class Dashboard extends Component {
 
   render() {
 
-    const { txt } = this.props;
+    const {txt, localization} = this.props;
     const { isConfirmDialogShown, isMessageDialogShown, dialogMessage, confirmMessage } = this.state;
     
     if(!isConfirmDialogShown) {
       this.confirmCallback = null;
     }
 
+    let langs = Languages;
+    if(localization != undefined) {
+      langs = localization;
+    }
+
     const menu = (
       <Menu onSelect={ ky => this.onLanguageSelect(ky)}>
-        {Object.keys(Languages).map(lng => <MenuItem style={{cursor: 'pointer', color: '#fff', backgroundColor: '#000' }} key={lng}> {lng} </MenuItem> )}
+        {Object.keys(langs).map(lng => <MenuItem style={{cursor: 'pointer', color: '#fff', backgroundColor: '#000' }} key={lng}> {lng} </MenuItem> )}
       </Menu>
     );
 
@@ -115,8 +117,8 @@ export class Dashboard extends Component {
 
         <Tabs defaultIndex={pages.PROJECTS} onSelect={this.onTabSelected}>
             <TabList>
-              <Tab>{txt.projects}</Tab>
-              <Tab>{txt.users}</Tab>
+              <Tab>{txt.get("projects")}</Tab>
+              <Tab>{txt.get("users")}</Tab>
             </TabList>
 
             <TabPanel>
@@ -134,14 +136,14 @@ export class Dashboard extends Component {
 
         <LanguageContainer>
           <SettingsButton onClick={this.onSettingsClick.bind(this)}>
-            {this.props.txt.settings} <i className="material-icons">settings</i>
+            {this.props.txt.get("settings")} <i className="material-icons">settings</i>
           </SettingsButton>
           <Dropdown
             trigger={['click']}
             overlay={menu}
             animation="slide-up"
           >
-            <Language>{this.props.txt.languages} <i className="material-icons">language</i></Language>
+            <Language>{this.props.txt.get("languages")} <i className="material-icons">language</i></Language>
           </Dropdown>
         </LanguageContainer>
 
@@ -175,15 +177,16 @@ const SettingsButton = styled.div`
 SettingsButton.displayName = 'SettingsButton';
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({getUserHash, removeUser,
-    updateLanguage}, dispatch);
+  return bindActionCreators({
+    getUserHash, removeUser, updateLanguage, fetchLocalization
+  }, dispatch);
 };
 
 const mapStateToProps = state =>{
   const {loggedInUser} = state.user;
-  const {txt} = state.geolocation;
+  const {txt, localization} = state.geolocation;
 
-  return {loggedInUser, txt};
+  return {loggedInUser, txt, localization};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

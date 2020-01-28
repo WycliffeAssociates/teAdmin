@@ -31,12 +31,12 @@ export default class ConfirmDialog extends Component {
                   <Question>{message}</Question>
                   <Buttons>
                     <YesButton onClick={() => this.onButtonClicked(true)}>
-                      {txt.yes}
+                      {txt.get("yes")}
                     </YesButton>
                     
                     <NoButton
                       onClick={() => this.onButtonClicked(false)} 
-                      txt={txt.no}
+                      txt={txt.get("no")}
                       color={'#009CFF'}
                       height={'60px'}
                       width={'200px'}

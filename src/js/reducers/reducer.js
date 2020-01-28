@@ -9,5 +9,5 @@ export default combineReducers({
   geolocation: GeolocationReducer,
   direction: DirectionReducer,
   user,
-  Projects,
+  Projects
 });

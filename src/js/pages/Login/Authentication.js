@@ -81,7 +81,7 @@ export class Authentication extends React.Component {
               Retry <i className="material-icons">refresh</i>
               </Retry>
             <SettingsButton onClick={this.onSettingsClick.bind(this)}>
-              {this.props.txt.settings} <i className="material-icons">settings</i>
+              {this.props.txt.get("settings")} <i className="material-icons">settings</i>
             </SettingsButton>
           </div>
         }

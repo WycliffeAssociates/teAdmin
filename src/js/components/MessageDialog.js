@@ -24,7 +24,7 @@ export default class MessageDialog extends Component {
                 <Window>
                   <Message>{message}</Message>
                   <OkButton onClick={() => this.onButtonClicked()}>
-                    {txt.ok}
+                    {txt.get("ok")}
                   </OkButton>
                 </Window>
               </Overlay>

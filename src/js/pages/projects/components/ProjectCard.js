@@ -64,12 +64,12 @@ export default class ProjectCard extends React.Component {
 
                 <ButtonsContainer>
                   <BlueButton onClick={() => this.displayDetails()} >
-                    {txt.info} <i className="material-icons">error_outline</i> 
+                    {txt.get("info")} <i className="material-icons">error_outline</i> 
                   </BlueButton>
 
                   <BorderButton
                     onClick={()=> this.props.onDeleteProject(projectId)} 
-                    txt={txt.delete}
+                    txt={txt.get("delete")}
                     color={'#ff0000'}
                     height={'40px'}
                     width={'154px'}
@@ -87,7 +87,7 @@ export default class ProjectCard extends React.Component {
 
             <CardDetails picker={illustrations.picker}>
               <Header>
-                <Title>{txt.projectDetails}</Title>
+                <Title>{txt.get("projectDetails")}</Title>
                 <CloseButton onClick={() => this.displayDetails()}>
                   <i className="material-icons">highlight_off</i>
                 </CloseButton>
@@ -98,22 +98,22 @@ export default class ProjectCard extends React.Component {
                   <span>ID:</span> {projectId}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.language}:</span> ({language.slug}) {language.name}
+                  <span>{txt.get("language")}:</span> ({language.slug}) {language.name}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.book}:</span> ({book.slug}) {book.name}
+                  <span>{txt.get("book")}:</span> ({book.slug}) {book.name}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.version}:</span> ({version.slug}) {this.ucwords(version.name)}
+                  <span>{txt.get("version")}:</span> ({version.slug}) {this.ucwords(version.name)}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.mode}:</span> ({mode.unit == 1 ? "MULTI" : "SINGLE" }) {this.ucwords(mode.name)}
+                  <span>{txt.get("mode")}:</span> ({mode.unit == 1 ? "MULTI" : "SINGLE" }) {this.ucwords(mode.name)}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.anthology}:</span> ({anthology.slug}) {this.ucwords(anthology.name)}
+                  <span>{txt.get("anthology")}:</span> ({anthology.slug}) {this.ucwords(anthology.name)}
                   </DetailItem>
                 <DetailItem>
-                  <span>{txt.sourceLanguage}:</span> ({sourceLanguage.slug}) {sourceLanguage.name}
+                  <span>{txt.get("sourceLanguage")}:</span> ({sourceLanguage.slug}) {sourceLanguage.name}
                   </DetailItem>
               </Details>
               

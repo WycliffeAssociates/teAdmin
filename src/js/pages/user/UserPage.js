@@ -19,12 +19,12 @@ export class UserPage extends React.Component {
 
   onDeleteUser(id) {
     const {txt} = this.props;
-    this.handleConfirmDialogShown(true, txt.deleteConfirm, (isYes) => {
+    this.handleConfirmDialogShown(true, txt.get("deleteConfirm"), (isYes) => {
       if(isYes) {
         this.props.deleteUser(id, this.props.history, (success, error) => {
           this.handleConfirmDialogShown(false, "", null);
           if(!success) {
-            this.handleMessagDialogShown(true, this.props.txt.error);
+            this.handleMessagDialogShown(true, this.props.txt.get("error"));
           }
         });
       }

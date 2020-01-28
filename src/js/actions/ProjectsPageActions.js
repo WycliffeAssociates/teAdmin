@@ -38,7 +38,7 @@ export const deleteProject = (id, redirect, callback) => {
         if(callback != undefined) {
           callback(false, exception);
         }
-      });;
+      });
   };
 };
 

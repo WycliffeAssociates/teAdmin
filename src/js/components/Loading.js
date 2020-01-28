@@ -8,7 +8,7 @@ class Loading extends Component {
     return (
 
       <Container height={height} top={top} >
-        <h1>{message ? message : this.props.txt.loading}</h1>
+        <h1>{message ? message : this.props.txt.get("loading")}</h1>
         <img src={loadingRingImg} alt="Loading..." />
       </Container>
     );
