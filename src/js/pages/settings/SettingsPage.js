@@ -39,7 +39,7 @@ export class SettingsPage extends React.Component {
   }
 
   onLocalizationDownload() {
-    var data = new Blob([JSON.stringify(Localization)], {type: 'text/json'});
+    var data = new Blob([JSON.stringify(Localization, null, 4)], {type: 'text/json'});
     var jsonURL = window.URL.createObjectURL(data);
     var tempLink = document.createElement('a');
     tempLink.href = jsonURL;
