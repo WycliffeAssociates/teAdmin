@@ -15,7 +15,8 @@ export class SettingsPage extends React.Component {
 
     this.onServerNameChange = this.onServerNameChange.bind(this);
     this.onLocalizationChange = this.onLocalizationChange.bind(this);
-    this.onLocalizationDownload = this.onLocalizationDownload.bind(this);
+    this.onDefaultLocalizationDownload = this.onDefaultLocalizationDownload.bind(this);
+    this.onUserLocalizationDownload = this.onUserLocalizationDownload.bind(this);
   }
 
   componentWillMount() {
@@ -38,8 +39,17 @@ export class SettingsPage extends React.Component {
     this.inputElement.value = "";
   }
 
-  onLocalizationDownload() {
+  onDefaultLocalizationDownload() {
     var data = new Blob([JSON.stringify(Localization, null, 4)], {type: 'text/json'});
+    var jsonURL = window.URL.createObjectURL(data);
+    var tempLink = document.createElement('a');
+    tempLink.href = jsonURL;
+    tempLink.setAttribute('download', 'localization.json');
+    tempLink.click();
+  }
+
+  onUserLocalizationDownload() {
+    var data = new Blob([JSON.stringify(this.props.localization, null, 4)], {type: 'text/json'});
     var jsonURL = window.URL.createObjectURL(data);
     var tempLink = document.createElement('a');
     tempLink.href = jsonURL;
@@ -93,7 +103,8 @@ export class SettingsPage extends React.Component {
                 onChange={(e) => {this.onLocalizationChange()}} 
                 innerRef={input => this.inputElement = input}
                 style={{display: 'none'}} />
-                <DownloadLink onClick={this.onLocalizationDownload}>{txt.get("download")}</DownloadLink>
+                <DownloadLink onClick={this.onDefaultLocalizationDownload}>{txt.get("downloadDefaultLocal")}</DownloadLink>
+                <DownloadLink onClick={this.onUserLocalizationDownload}>{txt.get("downloadUserLocal")}</DownloadLink>
             </SettingsValue>
           </SettingsItem>
         
@@ -228,8 +239,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  const {txt} = state.geolocation;
-  return {txt};
+  const {txt, localization} = state.geolocation;
+  return {txt, localization};
 };
 
 export default connect (mapStateToProps, mapDispatchToProps )(SettingsPage);

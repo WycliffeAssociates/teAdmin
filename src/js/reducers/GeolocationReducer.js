@@ -28,6 +28,11 @@ export default (state = INITIAL_STATE, action ={}) => {
         localization: action.response,
         loading: false,
       };
+    case types.IMPORT_LOCALIZATION:
+      return {
+        ...state,
+        localization: action.localization,
+      };
     case types.LOCALIZATION_FAILED:
       return {
         ...state, error: action.err, loading: false,

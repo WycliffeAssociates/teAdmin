@@ -29,9 +29,11 @@ export const importLocalization = (file, callback) => {
       .post(`${config.apiUrl}localization/file`, data, {
         timeout: 120000,
       })
-      .then(() => {
+      .then(response => {
+        var localization = response.data.localization;
         dispatch({
           type: IMPORT_LOCALIZATION,
+          localization
         });
         if(callback != undefined) {
           callback(true);
