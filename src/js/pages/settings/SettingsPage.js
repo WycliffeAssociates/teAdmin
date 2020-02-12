@@ -40,21 +40,25 @@ export class SettingsPage extends React.Component {
   }
 
   onDefaultLocalizationDownload() {
-    var data = new Blob([JSON.stringify(Localization, null, 4)], {type: 'text/json'});
-    var jsonURL = window.URL.createObjectURL(data);
+    var data = encodeURIComponent(JSON.stringify(Localization, null, 4));
+    var jsonURL = "data:text/json;charset=utf-8," + data;
+
     var tempLink = document.createElement('a');
     tempLink.href = jsonURL;
     tempLink.setAttribute('download', 'localization.json');
     tempLink.click();
+    tempLink.remove();
   }
 
   onUserLocalizationDownload() {
-    var data = new Blob([JSON.stringify(this.props.localization, null, 4)], {type: 'text/json'});
-    var jsonURL = window.URL.createObjectURL(data);
+    var data = encodeURIComponent(JSON.stringify(this.props.localization, null, 4));
+    var jsonURL = "data:text/json;charset=utf-8," + data;
+
     var tempLink = document.createElement('a');
     tempLink.href = jsonURL;
     tempLink.setAttribute('download', 'localization.json');
     tempLink.click();
+    tempLink.remove();
   }
 
   onSaveClick() {
