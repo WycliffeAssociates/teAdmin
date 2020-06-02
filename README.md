@@ -1,2 +1,1 @@
-# teAdmin
-Admin app for BTT Exchanger
+moved to https://github.com/Bible-Translation-Tools/BTT-Exchanger
